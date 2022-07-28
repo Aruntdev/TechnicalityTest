@@ -40,7 +40,12 @@ namespace TechnicalityTestAPI
         public void UpdateCharge(int id, CreditCardCharge model)
         {
             var ccc = _context.CreditCardCharges.Find(id);
+            if (ccc == null)
+            {
+                return;
+            }
             ccc.Amount = model.Amount;
+            ccc.ChargeDateTime = DateTime.UtcNow;
             _context.SaveChanges();
         }
     }

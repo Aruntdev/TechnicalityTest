@@ -85,6 +85,13 @@ namespace TechnicalityTestWebApp.Controllers
                 var url = _config["ApiUrl"] + "/CCCharge";
                 var response = await _httpClient.PostAsync(url, requestContent);
 
+                //Code for point 1
+                if (response.IsSuccessStatusCode)
+                {
+                    var chargeId = await response.Content.ReadAsStringAsync();
+                    payment.CreditCardChargeId = Convert.ToInt32(chargeId);
+                }
+
                 payment.PaymentDateTime = DateTime.UtcNow;
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
